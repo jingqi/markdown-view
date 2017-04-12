@@ -35,7 +35,7 @@ public:
         _highlighting_style = style;
     }
 
-#if !MARKDOWN_VIEWER_USE_QTWEBKIT
+#if WITH_QTWEBENGINE
     const QString& theme_css_url() const
     {
         return _theme_css_url;
@@ -52,7 +52,7 @@ public:
 
 private:
     QString _highlighting_style;
-#if !MARKDOWN_VIEWER_USE_QTWEBKIT
+#if WITH_QTWEBENGINE
     QString _theme_css_url;
 #endif
 };

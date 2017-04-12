@@ -60,7 +60,7 @@ QString HtmlTemplate::build_html_header(RenderOptions options) const
 {
     QString header;
 
-#if !MARKDOWN_VIEWER_USE_QTWEBKIT
+#if WITH_QTWEBENGINE
     if (!theme_css_url().isEmpty())
         header += QString("<link rel=\"stylesheet\" href=\"%1\">").arg(theme_css_url());
 #endif
@@ -68,9 +68,7 @@ QString HtmlTemplate::build_html_header(RenderOptions options) const
     // add javascript for scrollbar synchronization
     if (options.testFlag(Template::ScrollbarSynchronization))
     {
-#if MARKDOWN_VIEWER_USE_QTWEBKIT
-        header += "<script type=\"text/javascript\">window.onscroll = function() { synchronizer.viewer_scrolled(); }; </script>\n";
-#else
+#if WITH_QTWEBENGINE
         header +=
                 "<script type=\"text/javascript\" src=\"qrc:///qtwebchannel/qwebchannel.js\"></script>"
                 "<script type=\"text/javascript\">window.onscroll = function() {"
@@ -79,6 +77,8 @@ QString HtmlTemplate::build_html_header(RenderOptions options) const
                 "        sync.viewer_scrolled(document.body.scrollTop / document.body.scrollHeight);"
                 "    });"
                 "}; </script>";
+#else
+        header += "<script type=\"text/javascript\">window.onscroll = function() { synchronizer.viewer_scrolled(); }; </script>\n";
 #endif
     }
 

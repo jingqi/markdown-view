@@ -7,10 +7,10 @@
 
 #include "markdown_viewer.h"
 
-#if MARKDOWN_VIEWER_USE_QTWEBKIT
-#   include <QWebFrame>
-#else
+#if WITH_QTWEBENGINE
 #   include <QWebEngineSettings>
+#else
+#   include <QWebFrame>
 #endif
 
 #include <QApplication>
@@ -22,22 +22,22 @@ namespace organic
 {
 
 MarkdownViewer::MarkdownViewer(QWidget *parent)
-#if MARKDOWN_VIEWER_USE_QTWEBKIT
-    : QWebView(parent),
-#else
+#if WITH_QTWEBENGINE
     :QWebEngineView(parent),
+#else
+    : QWebView(parent),
 #endif
      _preview_generator(new HtmlPreviewGenerator)
 {
-#if MARKDOWN_VIEWER_USE_QTWEBKIT
-    page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
-    settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
-#else
+#if WITH_QTWEBENGINE
     settings()->setAttribute(QWebEngineSettings::AutoLoadImages, true);
     settings()->setAttribute(QWebEngineSettings::JavascriptEnabled, true);
     settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
     settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
     settings()->setAttribute(QWebEngineSettings::LocalStorageEnabled, true);
+#else
+    page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+    settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
 #endif
 
     init_actions();
@@ -122,10 +122,10 @@ void MarkdownViewer::set_code_highlighting_style(const QString &style_name)
 
 void MarkdownViewer::set_theme_css_url(const QString &css_url)
 {
-#if MARKDOWN_VIEWER_USE_QTWEBKIT
-    page()->settings()->setUserStyleSheetUrl(QUrl(css_url));
-#else
+#if WITH_QTWEBENGINE
     _preview_generator->set_theme_css_url(css_url);
+#else
+    page()->settings()->setUserStyleSheetUrl(QUrl(css_url));
 #endif
 }
 
@@ -157,7 +157,7 @@ QString MarkdownViewer::post_process_html(const QString &html)
 void MarkdownViewer::scroll_to_anchor(const QUrl &url)
 {
     QString anchor = url.toString().remove("#");
-#if MARKDOWN_VIEWER_USE_QTWEBKIT
+#if !WITH_QTWEBENGINE
     page()->mainFrame()->scrollToAnchor(anchor);
 #endif
 }

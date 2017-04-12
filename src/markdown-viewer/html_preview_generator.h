@@ -40,7 +40,7 @@ public slots:
     void set_diagram_support_enabled(bool enabled);
     void set_code_highlighting_enabled(bool enabled);
     void set_code_highlighting_style(const QString &style);
-#if !MARKDOWN_VIEWER_USE_QTWEBKIT
+#if WITH_QTWEBENGINE
     void set_theme_css_url(const QString &css_url);
 #endif
 

@@ -101,7 +101,7 @@ void HtmlPreviewGenerator::set_code_highlighting_style(const QString &style)
     generate_html_from_markdown();
 }
 
-#if !MARKDOWN_VIEWER_USE_QTWEBKIT
+#if WITH_QTWEBENGINE
 void HtmlPreviewGenerator::set_theme_css_url(const QString &css_url)
 {
     _converter->template_renderer()->set_theme_css_url(css_url);

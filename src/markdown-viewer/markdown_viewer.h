@@ -4,10 +4,10 @@
 
 #include "markdown_viewer_config.h"
 
-#if MARKDOWN_VIEWER_USE_QTWEBKIT
-#   include <QWebView>
-#else
+#if WITH_QTWEBENGINE
 #   include <QWebEngineView>
+#else
+#   include <QWebView>
 #endif
 
 #include "markdown_viewer_options.h"
@@ -17,10 +17,10 @@ namespace organic
 
 class HtmlPreviewGenerator;
 
-#if MARKDOWN_VIEWER_USE_QTWEBKIT
-class MDVIEWER_API MarkdownViewer : public QWebView
-#else
+#if WITH_QTWEBENGINE
 class MDVIEWER_API MarkdownViewer : public QWebEngineView
+#else
+class MDVIEWER_API MarkdownViewer : public QWebView
 #endif
 {
     Q_OBJECT
