@@ -39,7 +39,7 @@ INCLUDEPATH += \
 LIBS += -L$$OUT_PWD/../discount$${OUT_TAIL} -ldiscount
 
 # hoedown
-INCLUDEPATH += $$PWD/../../../3rdparty/hoedown.git
+INCLUDEPATH += $$PWD/../../3rdparty/hoedown.git
 LIBS += -L$$OUT_PWD/../hoedown$${OUT_TAIL} -lhoedown
 
 # 修复链接

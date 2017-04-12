@@ -1,3 +1,6 @@
 [submodule "3rdparty/discount.git"]
 	path = 3rdparty/discount.git
 	url = https://github.com/Orc/discount.git
+[submodule "3rdparty/hoedown.git"]
+	path = 3rdparty/hoedown.git
+	url = https://github.com/hoedown/hoedown.git
