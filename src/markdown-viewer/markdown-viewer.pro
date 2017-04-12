@@ -34,7 +34,7 @@ RESOURCES += $$files(*.qrc, true)
 
 # discount
 INCLUDEPATH += \
-    $$PWD/../../../3rdparty/discount.git \
+    $$PWD/../../3rdparty/discount.git \
     $$PWD/../discount
 LIBS += -L$$OUT_PWD/../discount$${OUT_TAIL} -ldiscount
 
@@ -44,9 +44,6 @@ LIBS += -L$$OUT_PWD/../hoedown$${OUT_TAIL} -lhoedown
 
 # 修复链接
 mac {
-    QMAKE_POST_LINK += install_name_tool -change libdiscount.1.dylib \
-        @rpath/libdiscount.1.dylib \
-        $$OUT_PWD/lib$${TARGET}.dylib ;
     QMAKE_POST_LINK += install_name_tool -change libhoedown.1.dylib \
         @rpath/libhoedown.1.dylib \
         $$OUT_PWD/lib$${TARGET}.dylib ;
