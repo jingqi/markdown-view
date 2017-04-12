@@ -1,0 +1,188 @@
+﻿
+#include <assert.h>
+
+#include <QAction>
+#include <QMenu>
+#include <QContextMenuEvent>
+
+#include "markdown_viewer.h"
+
+#if MARKDOWN_VIEWER_USE_QTWEBKIT
+#   include <QWebFrame>
+#else
+#   include <QWebEngineSettings>
+#endif
+
+#include <QApplication>
+
+#include "html_preview_generator.h"
+
+
+namespace organic
+{
+
+MarkdownViewer::MarkdownViewer(QWidget *parent)
+#if MARKDOWN_VIEWER_USE_QTWEBKIT
+    : QWebView(parent),
+#else
+    :QWebEngineView(parent),
+#endif
+     _preview_generator(new HtmlPreviewGenerator)
+{
+#if MARKDOWN_VIEWER_USE_QTWEBKIT
+    page()->setLinkDelegationPolicy(QWebPage::DelegateAllLinks);
+    settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled, true);
+#else
+    settings()->setAttribute(QWebEngineSettings::AutoLoadImages, true);
+    settings()->setAttribute(QWebEngineSettings::JavascriptEnabled, true);
+    settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessFileUrls, true);
+    settings()->setAttribute(QWebEngineSettings::LocalContentCanAccessRemoteUrls, true);
+    settings()->setAttribute(QWebEngineSettings::LocalStorageEnabled, true);
+#endif
+
+    init_actions();
+    init_popup_menu();
+
+    _base_url = QUrl::fromLocalFile(qApp->applicationDirPath());
+
+    // Setup preview
+    connect(_preview_generator, SIGNAL(html_result_ready(QString)),
+            this, SLOT(html_result_ready(QString)));
+    _preview_generator->start();
+}
+
+MarkdownViewer::~MarkdownViewer()
+{
+    _preview_generator->markdown_text_changed(QString());
+    _preview_generator->wait();
+    delete _preview_generator;
+    _preview_generator = NULL;
+}
+
+void MarkdownViewer::init_actions()
+{
+    assert(NULL == _action_reload);
+    _action_reload = new QAction(QIcon(":/markdown-viewer/refresh"), tr("重新加载(&R)"), this);
+    _action_reload->setStatusTip(tr("重新加载页面"));
+    _action_reload->setToolTip(tr("重新加载页面"));
+    _action_reload->setShortcut(QKeySequence::Refresh);
+    _action_reload->setPriority(QAction::LowPriority);
+    connect(_action_reload, SIGNAL(triggered()),
+           this, SLOT(reload()));
+
+    assert(NULL == _action_zoom_in);
+    _action_zoom_in = new QAction(QIcon(":/markdown-viewer/zoom-in"), tr("放大(&I)"), this);
+    _action_zoom_in->setStatusTip(tr("放大"));
+    _action_zoom_in->setToolTip(tr("放大"));
+    _action_zoom_in->setShortcut(QKeySequence::ZoomIn);
+    _action_zoom_in->setPriority(QAction::LowPriority);
+    connect(_action_zoom_in, SIGNAL(triggered()),
+            this, SLOT(zoom_in()));
+
+    assert(NULL == _action_zoom_out);
+    _action_zoom_out = new QAction(QIcon(":/markdown-viewer/zoom-out"), tr("缩小(&O)"), this);
+    _action_zoom_out->setStatusTip(tr("缩小"));
+    _action_zoom_out->setToolTip(tr("缩小"));
+    _action_zoom_out->setShortcut(QKeySequence::ZoomOut);
+    _action_zoom_out->setPriority(QAction::LowPriority);
+    connect(_action_zoom_out, SIGNAL(triggered()),
+            this, SLOT(zoom_out()));
+
+    assert(NULL == _action_reset_zoom);
+    _action_reset_zoom = new QAction(QIcon(":/markdown-viewer/reset-zoom"), tr("重置缩放(&Z)"), this);
+    _action_reset_zoom->setStatusTip(tr("重置缩放"));
+    _action_reset_zoom->setToolTip(tr("重置缩放"));
+    _action_reset_zoom->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
+    _action_reset_zoom->setPriority(QAction::LowPriority);
+    connect(_action_reset_zoom, SIGNAL(triggered()),
+            this, SLOT(reset_zoom()));
+}
+
+void MarkdownViewer::init_popup_menu()
+{
+    assert(NULL == _menu_popup);
+    _menu_popup = new QMenu(this);
+
+    // _menu_popup->addAction(_action_reload);
+    // _menu_popup->addSeparator();
+    _menu_popup->addAction(_action_zoom_in);
+    _menu_popup->addAction(_action_zoom_out);
+    _menu_popup->addAction(_action_reset_zoom);
+}
+
+void MarkdownViewer::set_options(MarkdownViewerOptions *options)
+{
+    _preview_generator->set_options(options);
+}
+
+void MarkdownViewer::set_code_highlighting_style(const QString &style_name)
+{
+    _preview_generator->set_code_highlighting_style(style_name);
+}
+
+void MarkdownViewer::set_theme_css_url(const QString &css_url)
+{
+#if MARKDOWN_VIEWER_USE_QTWEBKIT
+    page()->settings()->setUserStyleSheetUrl(QUrl(css_url));
+#else
+    _preview_generator->set_theme_css_url(css_url);
+#endif
+}
+
+void MarkdownViewer::set_base_url(const QUrl &base_url)
+{
+    _base_url = base_url;
+}
+
+void MarkdownViewer::set_markdown_content(const QString &markdown)
+{
+    _preview_generator->markdown_text_changed(markdown);
+}
+
+void MarkdownViewer::html_result_ready(const QString &html)
+{
+#if !defined(NDEBUG) && 0
+    qDebug() << html << endl;
+#endif
+    const QString post = post_process_html(html);
+    setHtml(post, _base_url);
+    emit html_ready();
+}
+
+QString MarkdownViewer::post_process_html(const QString &html)
+{
+    return html;
+}
+
+void MarkdownViewer::scroll_to_anchor(const QUrl &url)
+{
+    QString anchor = url.toString().remove("#");
+#if MARKDOWN_VIEWER_USE_QTWEBKIT
+    page()->mainFrame()->scrollToAnchor(anchor);
+#endif
+}
+
+void MarkdownViewer::contextMenuEvent(QContextMenuEvent *e)
+{
+    assert(NULL != e);
+    if (NULL == _menu_popup)
+        return;
+    _menu_popup->exec(e->globalPos());
+}
+
+void MarkdownViewer::zoom_in()
+{
+    setZoomFactor(zoomFactor() * 1.1);
+}
+
+void MarkdownViewer::zoom_out()
+{
+    setZoomFactor(zoomFactor() * 0.9);
+}
+
+void MarkdownViewer::reset_zoom()
+{
+    setZoomFactor(1);
+}
+
+}

@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/">
+        <file alias="test.md">test.md</file>
+    </qresource>
+</RCC>
