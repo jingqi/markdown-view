@@ -4,8 +4,6 @@
 
 #include <QString>
 
-#include "../markdown_viewer_config.h"
-
 
 namespace organic
 {
