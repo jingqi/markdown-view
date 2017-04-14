@@ -4,3 +4,6 @@
 [submodule "3rdparty/hoedown.git"]
 	path = 3rdparty/hoedown.git
 	url = https://github.com/hoedown/hoedown.git
+[submodule "3rdparty/mermaid.git"]
+	path = 3rdparty/mermaid.git
+	url = https://github.com/knsv/mermaid.git

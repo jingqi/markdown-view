@@ -113,8 +113,9 @@ QString HtmlTemplate::build_html_header(RenderOptions options) const
     // add mermaid.js script to HTML header
     if (options.testFlag(Template::DiagramSupport))
     {
-        header += "<link rel=\"stylesheet\" href=\"qrc:/mermaid/resources/scripts/mermaid/mermaid.css\">\n";
-        header += "<script src=\"qrc:/mermaid/resources/scripts/mermaid/mermaid.full.min.js\"></script>\n";
+        header += "<link rel=\"stylesheet\" href=\"qrc:/mermaid/mermaid.css\">\n";
+        header += "<script src=\"qrc:/mermaid/mermaid.min.js\"></script>\n";
+        header += "<script>mermaid.initialize({startOnLoad:true});</script>\n";
     }
 
     return header;

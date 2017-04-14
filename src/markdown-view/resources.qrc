@@ -4,8 +4,6 @@
         <file alias="zoom-in">resources/images/zoom-in.png</file>
         <file alias="zoom-out">resources/images/zoom-out.png</file>
         <file alias="reset-zoom">resources/images/reset-zoom.png</file>
-    </qresource>
-    <qresource prefix="/markdown-view">
         <file alias="template.html">resources/template.html</file>
     </qresource>
     <qresource prefix="/markdown-view/css">
@@ -25,8 +23,8 @@
         <file>resources/scripts/highlight.js/styles/solarized_dark.css</file>
     </qresource>
     <qresource prefix="/mermaid">
-        <file>resources/scripts/mermaid/mermaid.full.min.js</file>
-        <file>resources/scripts/mermaid/mermaid.css</file>
+        <file alias="mermaid.css">../../3rdparty/mermaid.git/dist/mermaid.css</file>
+        <file alias="mermaid.min.js">../../3rdparty/mermaid.git/dist/mermaid.min.js</file>
     </qresource>
     <qresource prefix="/mathjax">
         <file>resources/scripts/mathjax/config/local/local.js</file>
