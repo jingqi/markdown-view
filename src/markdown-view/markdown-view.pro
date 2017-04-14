@@ -18,7 +18,7 @@ qtHaveModule(webkitwidgets) {
     message(Neither QtWebEngine nor QtWebEngine found!)
 }
 
-DEFINES += BUILDING_MARKDOWN_PREVIEWER_SHARED_LIB
+DEFINES += BUILDING_MARKDOWN_VIEW_SHARED_LIB
 
 # 头文件
 HEADERS += $$files(*.h, true)

@@ -5,7 +5,7 @@
 #include <QString>
 
 
-namespace organic
+namespace mdview
 {
 
 class Template

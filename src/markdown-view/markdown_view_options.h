@@ -2,7 +2,7 @@
 #ifndef ___HEADFILE_F8A3B755_8656_4D02_A611_CF0B1553E2EB_
 #define ___HEADFILE_F8A3B755_8656_4D02_A611_CF0B1553E2EB_
 
-namespace organic
+namespace mdview
 {
 
 class MarkdownViewOptions

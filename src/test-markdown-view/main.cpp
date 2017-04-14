@@ -5,7 +5,7 @@
 
 #include <markdown-view/markdown_view.h>
 
-using namespace organic;
+using namespace mdview;
 
 int main(int argc, char *argv[])
 {

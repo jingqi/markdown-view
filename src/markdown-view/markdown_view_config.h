@@ -4,7 +4,7 @@
 
 #include <QtGlobal>
 
-#if defined(BUILDING_MARKDOWN_PREVIEWER_SHARED_LIB)
+#if defined(BUILDING_MARKDOWN_VIEW_SHARED_LIB)
 #   define MDVIEW_API Q_DECL_EXPORT
 #else
 #   define MDVIEW_API Q_DECL_IMPORT

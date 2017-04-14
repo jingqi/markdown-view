@@ -11,7 +11,7 @@
 #include "html_preview_generator.h"
 
 
-namespace organic
+namespace mdview
 {
 
 HtmlPreviewGenerator::HtmlPreviewGenerator(QObject *parent)

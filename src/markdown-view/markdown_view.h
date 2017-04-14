@@ -12,7 +12,7 @@
 
 #include "markdown_view_options.h"
 
-namespace organic
+namespace mdview
 {
 
 class HtmlPreviewGenerator;

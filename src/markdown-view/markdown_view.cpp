@@ -17,7 +17,7 @@
 #include "html_preview_generator.h"
 
 
-namespace organic
+namespace mdview
 {
 
 MarkdownView::MarkdownView(QWidget *parent)

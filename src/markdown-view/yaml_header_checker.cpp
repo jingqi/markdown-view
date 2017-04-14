@@ -3,7 +3,7 @@
 
 #include "yaml_header_checker.h"
 
-namespace organic
+namespace mdview
 {
 
 YamlHeaderChecker::YamlHeaderChecker(const QString &text)

@@ -11,7 +11,7 @@ extern "C"
 #include "markdown_document.h"
 #include "../template/html_template.h"
 
-namespace organic
+namespace mdview
 {
 
 class HoedownMarkdownDocument : public MarkdownDocument

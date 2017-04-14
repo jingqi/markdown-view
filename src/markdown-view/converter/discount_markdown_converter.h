@@ -5,7 +5,7 @@
 #include "markdown_converter.h"
 
 
-namespace organic
+namespace mdview
 {
 
 class DiscountMarkdownConverter : public MarkdownConverter

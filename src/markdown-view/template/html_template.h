@@ -5,7 +5,7 @@
 #include "template.h"
 
 
-namespace organic
+namespace mdview
 {
 
 class HtmlTemplate : public Template

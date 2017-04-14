@@ -4,7 +4,7 @@
 
 #include <QString>
 
-namespace organic
+namespace mdview
 {
 
 class YamlHeaderChecker

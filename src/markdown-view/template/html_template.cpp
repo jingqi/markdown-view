@@ -5,7 +5,7 @@
 #include "html_template.h"
 
 
-namespace organic
+namespace mdview
 {
 
 HtmlTemplate::HtmlTemplate()
