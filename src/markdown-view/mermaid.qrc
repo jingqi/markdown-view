@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/mermaid">
+        <file alias="mermaid.css">../../3rdparty/mermaid.git/dist/mermaid.css</file>
+        <file alias="mermaid.min.js">../../3rdparty/mermaid.git/dist/mermaid.min.js</file>
+    </qresource>
+</RCC>

@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/highlight.js">
+        <file alias="highlight.pack.js">../../3rdparty/highlight.js/highlight.pack.js</file>
+        <file alias="styles/default.css">../../3rdparty/highlight.js/styles/default.css</file>
+        <file alias="styles/solarized_light.css">../../3rdparty/highlight.js/styles/solarized_light.css</file>
+        <file alias="styles/github.css">../../3rdparty/highlight.js/styles/github.css</file>
+        <file alias="styles/solarized_dark.css">../../3rdparty/highlight.js/styles/solarized_dark.css</file>
+    </qresource>
+</RCC>

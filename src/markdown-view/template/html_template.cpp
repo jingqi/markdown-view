@@ -105,8 +105,8 @@ QString HtmlTemplate::build_html_header(RenderOptions options) const
     // add Highlight.js script to HTML header
     if (options.testFlag(Template::CodeHighlighting))
     {
-        header += QString("<link rel=\"stylesheet\" href=\"qrc:/highlight.js/resources/scripts/highlight.js/styles/%1.css\">\n").arg(code_highlighting_style());
-        header += "<script src=\"qrc:/highlight.js/resources/scripts/highlight.js/highlight.pack.js\"></script>\n";
+        header += QString("<link rel=\"stylesheet\" href=\"qrc:/highlight.js/styles/%1.css\">\n").arg(code_highlighting_style());
+        header += "<script src=\"qrc:/highlight.js/highlight.pack.js\"></script>\n";
         header += "<script>hljs.initHighlightingOnLoad();</script>\n";
     }
 
