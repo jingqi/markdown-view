@@ -18,7 +18,7 @@ int main(int argc, char *argv[])
     MarkdownView w;
     MarkdownViewOptions options;
     w.set_options(&options);
-    w.set_code_highlighting_style("solarized-light");
+    w.set_code_highlighting_style("solarized_light");
     w.set_theme_css_url("qrc:/markdown-view/css/solarized-light.css");
     w.set_markdown_content(all);
     w.show();
