@@ -2,7 +2,7 @@
 #ifndef ___HEADFILE_A14F7347_4102_4E5F_A6FF_1F53A227C480_
 #define ___HEADFILE_A14F7347_4102_4E5F_A6FF_1F53A227C480_
 
-#include "markdown_viewer_config.h"
+#include "markdown_view_config.h"
 
 #if WITH_QTWEBENGINE
 #   include <QWebEngineView>
@@ -10,7 +10,7 @@
 #   include <QWebView>
 #endif
 
-#include "markdown_viewer_options.h"
+#include "markdown_view_options.h"
 
 namespace organic
 {
@@ -18,9 +18,9 @@ namespace organic
 class HtmlPreviewGenerator;
 
 #if WITH_QTWEBENGINE
-class MDVIEWER_API MarkdownViewer : public QWebEngineView
+class MDVIEW_API MarkdownView : public QWebEngineView
 #else
-class MDVIEWER_API MarkdownViewer : public QWebView
+class MDVIEW_API MarkdownView : public QWebView
 #endif
 {
     Q_OBJECT
@@ -33,10 +33,10 @@ class MDVIEWER_API MarkdownViewer : public QWebView
     HtmlPreviewGenerator *_preview_generator = NULL;
 
 public:
-    MarkdownViewer(QWidget *parent = NULL);
-    ~MarkdownViewer();
+    MarkdownView(QWidget *parent = NULL);
+    ~MarkdownView();
 
-    void set_options(MarkdownViewerOptions *options);
+    void set_options(MarkdownViewOptions *options);
     void set_code_highlighting_style(const QString& style_name);
     void set_theme_css_url(const QString& css_url);
     void set_base_url(const QUrl& base_url);

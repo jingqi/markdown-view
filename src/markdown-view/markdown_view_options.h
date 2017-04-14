@@ -5,7 +5,7 @@
 namespace organic
 {
 
-class MarkdownViewerOptions
+class MarkdownViewOptions
 {
 public:
     bool enable_math_support = true;

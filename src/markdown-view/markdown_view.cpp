@@ -1,11 +1,12 @@
 ﻿
 #include <assert.h>
 
+#include <QApplication>
 #include <QAction>
 #include <QMenu>
 #include <QContextMenuEvent>
 
-#include "markdown_viewer.h"
+#include "markdown_view.h"
 
 #if WITH_QTWEBENGINE
 #   include <QWebEngineSettings>
@@ -13,15 +14,13 @@
 #   include <QWebFrame>
 #endif
 
-#include <QApplication>
-
 #include "html_preview_generator.h"
 
 
 namespace organic
 {
 
-MarkdownViewer::MarkdownViewer(QWidget *parent)
+MarkdownView::MarkdownView(QWidget *parent)
 #if WITH_QTWEBENGINE
     :QWebEngineView(parent),
 #else
@@ -51,7 +50,7 @@ MarkdownViewer::MarkdownViewer(QWidget *parent)
     _preview_generator->start();
 }
 
-MarkdownViewer::~MarkdownViewer()
+MarkdownView::~MarkdownView()
 {
     _preview_generator->markdown_text_changed(QString());
     _preview_generator->wait();
@@ -59,10 +58,10 @@ MarkdownViewer::~MarkdownViewer()
     _preview_generator = NULL;
 }
 
-void MarkdownViewer::init_actions()
+void MarkdownView::init_actions()
 {
     assert(NULL == _action_reload);
-    _action_reload = new QAction(QIcon(":/markdown-viewer/refresh"), tr("重新加载(&R)"), this);
+    _action_reload = new QAction(QIcon(":/markdown-view/refresh"), tr("重新加载(&R)"), this);
     _action_reload->setStatusTip(tr("重新加载页面"));
     _action_reload->setToolTip(tr("重新加载页面"));
     _action_reload->setShortcut(QKeySequence::Refresh);
@@ -71,7 +70,7 @@ void MarkdownViewer::init_actions()
            this, SLOT(reload()));
 
     assert(NULL == _action_zoom_in);
-    _action_zoom_in = new QAction(QIcon(":/markdown-viewer/zoom-in"), tr("放大(&I)"), this);
+    _action_zoom_in = new QAction(QIcon(":/markdown-view/zoom-in"), tr("放大(&I)"), this);
     _action_zoom_in->setStatusTip(tr("放大"));
     _action_zoom_in->setToolTip(tr("放大"));
     _action_zoom_in->setShortcut(QKeySequence::ZoomIn);
@@ -80,7 +79,7 @@ void MarkdownViewer::init_actions()
             this, SLOT(zoom_in()));
 
     assert(NULL == _action_zoom_out);
-    _action_zoom_out = new QAction(QIcon(":/markdown-viewer/zoom-out"), tr("缩小(&O)"), this);
+    _action_zoom_out = new QAction(QIcon(":/markdown-view/zoom-out"), tr("缩小(&O)"), this);
     _action_zoom_out->setStatusTip(tr("缩小"));
     _action_zoom_out->setToolTip(tr("缩小"));
     _action_zoom_out->setShortcut(QKeySequence::ZoomOut);
@@ -89,7 +88,7 @@ void MarkdownViewer::init_actions()
             this, SLOT(zoom_out()));
 
     assert(NULL == _action_reset_zoom);
-    _action_reset_zoom = new QAction(QIcon(":/markdown-viewer/reset-zoom"), tr("重置缩放(&Z)"), this);
+    _action_reset_zoom = new QAction(QIcon(":/markdown-view/reset-zoom"), tr("重置缩放(&Z)"), this);
     _action_reset_zoom->setStatusTip(tr("重置缩放"));
     _action_reset_zoom->setToolTip(tr("重置缩放"));
     _action_reset_zoom->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Z));
@@ -98,7 +97,7 @@ void MarkdownViewer::init_actions()
             this, SLOT(reset_zoom()));
 }
 
-void MarkdownViewer::init_popup_menu()
+void MarkdownView::init_popup_menu()
 {
     assert(NULL == _menu_popup);
     _menu_popup = new QMenu(this);
@@ -110,17 +109,17 @@ void MarkdownViewer::init_popup_menu()
     _menu_popup->addAction(_action_reset_zoom);
 }
 
-void MarkdownViewer::set_options(MarkdownViewerOptions *options)
+void MarkdownView::set_options(MarkdownViewOptions *options)
 {
     _preview_generator->set_options(options);
 }
 
-void MarkdownViewer::set_code_highlighting_style(const QString &style_name)
+void MarkdownView::set_code_highlighting_style(const QString &style_name)
 {
     _preview_generator->set_code_highlighting_style(style_name);
 }
 
-void MarkdownViewer::set_theme_css_url(const QString &css_url)
+void MarkdownView::set_theme_css_url(const QString &css_url)
 {
 #if WITH_QTWEBENGINE
     _preview_generator->set_theme_css_url(css_url);
@@ -129,17 +128,17 @@ void MarkdownViewer::set_theme_css_url(const QString &css_url)
 #endif
 }
 
-void MarkdownViewer::set_base_url(const QUrl &base_url)
+void MarkdownView::set_base_url(const QUrl &base_url)
 {
     _base_url = base_url;
 }
 
-void MarkdownViewer::set_markdown_content(const QString &markdown)
+void MarkdownView::set_markdown_content(const QString &markdown)
 {
     _preview_generator->markdown_text_changed(markdown);
 }
 
-void MarkdownViewer::html_result_ready(const QString &html)
+void MarkdownView::html_result_ready(const QString &html)
 {
 #if !defined(NDEBUG) && 0
     qDebug() << html << endl;
@@ -149,12 +148,12 @@ void MarkdownViewer::html_result_ready(const QString &html)
     emit html_ready();
 }
 
-QString MarkdownViewer::post_process_html(const QString &html)
+QString MarkdownView::post_process_html(const QString &html)
 {
     return html;
 }
 
-void MarkdownViewer::scroll_to_anchor(const QUrl &url)
+void MarkdownView::scroll_to_anchor(const QUrl &url)
 {
     QString anchor = url.toString().remove("#");
 #if !WITH_QTWEBENGINE
@@ -162,7 +161,7 @@ void MarkdownViewer::scroll_to_anchor(const QUrl &url)
 #endif
 }
 
-void MarkdownViewer::contextMenuEvent(QContextMenuEvent *e)
+void MarkdownView::contextMenuEvent(QContextMenuEvent *e)
 {
     assert(NULL != e);
     if (NULL == _menu_popup)
@@ -170,17 +169,17 @@ void MarkdownViewer::contextMenuEvent(QContextMenuEvent *e)
     _menu_popup->exec(e->globalPos());
 }
 
-void MarkdownViewer::zoom_in()
+void MarkdownView::zoom_in()
 {
     setZoomFactor(zoomFactor() * 1.1);
 }
 
-void MarkdownViewer::zoom_out()
+void MarkdownView::zoom_out()
 {
     setZoomFactor(zoomFactor() * 0.9);
 }
 
-void MarkdownViewer::reset_zoom()
+void MarkdownView::reset_zoom()
 {
     setZoomFactor(1);
 }

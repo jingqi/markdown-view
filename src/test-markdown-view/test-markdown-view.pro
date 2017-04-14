@@ -1,5 +1,5 @@
 
-TARGET = test-markdown-viewer
+TARGET = test-markdown-view
 TEMPLATE = app
 
 include(../global.pri)
@@ -32,11 +32,11 @@ RESOURCES += $$files(*.qrc, true)
 # 其他文件
 OTHER_FILES += test.md
 
-# markdown-viewer
+# markdown-view
 INCLUDEPATH += $$PWD/..
-LIBS += -L$$OUT_PWD/../markdown-viewer$${OUT_TAIL}
-win32: LIBS += -lmarkdown-viewer1
-else: LIBS += -lmarkdown-viewer
+LIBS += -L$$OUT_PWD/../markdown-view$${OUT_TAIL}
+win32: LIBS += -lmarkdown-view1
+else: LIBS += -lmarkdown-view
 
 # 资源打包
 mac {
@@ -44,15 +44,16 @@ mac {
     libs.files = \
         $$OUT_PWD/../discount/libdiscount.1.dylib \
         $$OUT_PWD/../hoedown/libhoedown.1.dylib \
-        $$OUT_PWD/../markdown-viewer/libmarkdown-viewer.1.dylib
+        $$OUT_PWD/../markdown-view/libmarkdown-view.1.dylib
     QMAKE_BUNDLE_DATA += libs
 } else: win32 {
     # 拷贝资源文件
+    DST = $$OUT_PWD/$${DEBUG_MODE}
+    DST ~= s,/,\\,g
+
     SRC = $$OUT_PWD/../discount/$${DEBUG_MODE}/discount.dll
     POST_TARGETDEPS += $${SRC}
     SRC ~= s,/,\\,
-    DST = $$OUT_PWD/$${DEBUG_MODE}
-    DST ~= s,/,\\,g
     QMAKE_POST_LINK += $$quote(cmd /c xcopy /y /i $${SRC} $${DST}$$escape_expand(\n\t))
 
     SRC = $$OUT_PWD/../hoedown/$${DEBUG_MODE}/hoedown.dll
@@ -60,7 +61,7 @@ mac {
     SRC ~= s,/,\\,
     QMAKE_POST_LINK += $$quote(cmd /c xcopy /y /i $${SRC} $${DST}$$escape_expand(\n\t))
 
-    SRC = $$OUT_PWD/../markdown-viewer/$${DEBUG_MODE}/markdown-viewer1.dll
+    SRC = $$OUT_PWD/../markdown-view/$${DEBUG_MODE}/markdown-view1.dll
     POST_TARGETDEPS += $${SRC}
     SRC ~= s,/,\\,
     QMAKE_POST_LINK += $$quote(cmd /c xcopy /y /i $${SRC} $${DST}$$escape_expand(\n\t))
@@ -73,7 +74,7 @@ mac {
     POST_TARGETDEPS += $${SRC}
     QMAKE_POST_LINK += cp -Lf $${SRC} $$OUT_PWD/ ;
 
-    SRC = $$OUT_PWD/../markdown-viewer/libmarkdown-viewer.1.so
+    SRC = $$OUT_PWD/../markdown-view/libmarkdown-view.1.so
     POST_TARGETDEPS += $${SRC}
     QMAKE_POST_LINK += cp -Lf $${SRC} $$OUT_PWD/ ;
 }

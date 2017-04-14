@@ -10,7 +10,7 @@ namespace organic
 
 HtmlTemplate::HtmlTemplate()
 {
-    QFile f(":/markdown-viewer/template.html");
+    QFile f(":/markdown-view/template.html");
     if (f.open(QIODevice::ReadOnly | QIODevice::Text))
         _html_template = f.readAll();
 }

@@ -3,7 +3,7 @@
 
 #include <QFile>
 
-#include "markdown_viewer_config.h"
+#include "markdown_view_config.h"
 #include "converter/hoedown_markdown_converter.h"
 #include "converter/discount_markdown_converter.h"
 
@@ -18,7 +18,7 @@ HtmlPreviewGenerator::HtmlPreviewGenerator(QObject *parent)
     : QThread(parent)
 {}
 
-void HtmlPreviewGenerator::set_options(MarkdownViewerOptions *options)
+void HtmlPreviewGenerator::set_options(MarkdownViewOptions *options)
 {
     assert(NULL != options);
     _options = options;

@@ -1,5 +1,5 @@
 
-TARGET = markdown-viewer
+TARGET = markdown-view
 TEMPLATE = lib
 VERSION = 1.0.0
 
@@ -18,7 +18,7 @@ qtHaveModule(webkitwidgets) {
     message(Neither QtWebEngine nor QtWebEngine found!)
 }
 
-DEFINES += BUILDING_MARKDOWN_VIEWER_SHARED_LIB
+DEFINES += BUILDING_MARKDOWN_PREVIEWER_SHARED_LIB
 
 # 头文件
 HEADERS += $$files(*.h, true)
@@ -41,10 +41,3 @@ LIBS += -L$$OUT_PWD/../discount$${OUT_TAIL} -ldiscount
 # hoedown
 INCLUDEPATH += $$PWD/../../3rdparty/hoedown.git
 LIBS += -L$$OUT_PWD/../hoedown$${OUT_TAIL} -lhoedown
-
-# 修复链接
-mac {
-    QMAKE_POST_LINK += install_name_tool -change libhoedown.1.dylib \
-        @rpath/libhoedown.1.dylib \
-        $$OUT_PWD/lib$${TARGET}.dylib ;
-}

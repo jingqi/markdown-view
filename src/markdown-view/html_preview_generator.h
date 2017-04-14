@@ -10,7 +10,7 @@
 #include "markdown_document.h"
 #include "converter/markdown_converter.h"
 #include "template/template.h"
-#include "markdown_viewer_options.h"
+#include "markdown_view_options.h"
 
 namespace organic
 {
@@ -19,7 +19,7 @@ class HtmlPreviewGenerator : public QThread
 {
     Q_OBJECT
 
-    MarkdownViewerOptions *_options = NULL;
+    MarkdownViewOptions *_options = NULL;
     MarkdownDocument *_document = NULL;
     MarkdownConverter *_converter = NULL;
     QQueue<QString> _tasks;
@@ -29,7 +29,7 @@ class HtmlPreviewGenerator : public QThread
 public:
     explicit HtmlPreviewGenerator(QObject *parent = 0);
 
-    void set_options(MarkdownViewerOptions *options);
+    void set_options(MarkdownViewOptions *options);
     bool is_supported(MarkdownConverter::ConverterOption option) const;
 
 public slots:

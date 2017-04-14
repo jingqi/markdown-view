@@ -1,14 +1,14 @@
 <RCC>
-    <qresource prefix="/markdown-viewer">
+    <qresource prefix="/markdown-view">
         <file alias="refresh">resources/images/refresh.png</file>
         <file alias="zoom-in">resources/images/zoom-in.png</file>
         <file alias="zoom-out">resources/images/zoom-out.png</file>
         <file alias="reset-zoom">resources/images/reset-zoom.png</file>
     </qresource>
-    <qresource prefix="/markdown-viewer">
+    <qresource prefix="/markdown-view">
         <file alias="template.html">resources/template.html</file>
     </qresource>
-    <qresource prefix="/markdown-viewer/css">
+    <qresource prefix="/markdown-view/css">
         <file alias="markdown.css">resources/styles/markdown.css</file>
         <file alias="solarized-dark.css">resources/styles/solarized-dark.css</file>
         <file alias="solarized-light.css">resources/styles/solarized-light.css</file>
