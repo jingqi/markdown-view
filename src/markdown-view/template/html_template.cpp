@@ -74,11 +74,11 @@ QString HtmlTemplate::build_html_header(RenderOptions options) const
                 "<script type=\"text/javascript\">window.onscroll = function() {"
                 "    new QWebChannel(qt.webChannelTransport, function (channel) {"
                 "        var sync = channel.objects.synchronizer;"
-                "        sync.viewer_scrolled(document.body.scrollTop / document.body.scrollHeight);"
+                "        sync.view_scrolled(document.body.scrollTop / document.body.scrollHeight);"
                 "    });"
                 "}; </script>";
 #else
-        header += "<script type=\"text/javascript\">window.onscroll = function() { synchronizer.viewer_scrolled(); }; </script>\n";
+        header += "<script type=\"text/javascript\">window.onscroll = function() { synchronizer.view_scrolled(); }; </script>\n";
 #endif
     }
 
