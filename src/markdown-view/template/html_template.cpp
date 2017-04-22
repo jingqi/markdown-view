@@ -95,11 +95,13 @@ QString HtmlTemplate::build_html_header(RenderOptions options) const
         header += "<style type=\"text/css\">span.MathJax_SVG{zoom:1.6;}</style>"; // For mathjax SVG renderer
 #endif
 
+#if 0
         // Use online mathjax, and HTML-CSS renderer
-        // header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n";
-
+        header += "<script type=\"text/javascript\" src=\"http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML\"></script>\n";
+#else
         // Use local mathjax, and SVG renderer
-        header += "<script type=\"text/javascript\" src=\"qrc:/mathjax/resources/scripts/mathjax/MathJax.js?config=TeX-AMS-MML_SVG\"></script>\n";
+        header += "<script type=\"text/javascript\" src=\"qrc:/mathjax/MathJax.js?config=TeX-AMS-MML_SVG\"></script>\n";
+#endif
     }
 
     // add Highlight.js script to HTML header
